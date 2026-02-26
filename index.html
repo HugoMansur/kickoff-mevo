@@ -625,6 +625,15 @@
         upDots(){this.d.forEach((d,i)=>d.classList.toggle('active',i===this.c));}
         upProg(){document.getElementById('progressBar').style.width=((this.c+1)/this.s.length*100)+'%';}}
         document.addEventListener('DOMContentLoaded',()=>new S());
+
+        /* Cursor spotlight — bola rosa ao redor do mouse */
+        (function(){
+            const c=document.createElement('div');
+            c.style.cssText='position:fixed;width:36px;height:36px;border-radius:50%;background:rgba(250,182,191,0.45);pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:opacity 0.3s;opacity:0;';
+            document.body.appendChild(c);
+            document.addEventListener('mousemove',e=>{c.style.left=e.clientX+'px';c.style.top=e.clientY+'px';c.style.opacity='1';});
+            document.addEventListener('mouseleave',()=>{c.style.opacity='0';});
+        })();
     </script>
 </body>
 </html>
