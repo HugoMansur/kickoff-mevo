@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mevo — Kickoff Qualificação de Leads</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* ===========================================
+           MEVO BRAND — LIGHT THEME
+           Purple #3C0E6B + Pink accent #FAB6BF
+           =========================================== */
+        :root {
+            --purple: #3C0E6B;
+            --purple-mid: #491E74;
+            --pink: #FAB6BF;
+            --pink-hot: #FF7192;
+            --lavender: #F5F3F8;
+            --lavender-deep: #F2EEFB;
+            --muted: #8C8097;
+            --shadow: rgba(36, 28, 84, 0.11);
+
+            --bg: #F5F3F8;
+            --bg-white: #FFFFFF;
+            --bg-dark: #3C0E6B;
+            --text: #3C0E6B;
+            --text-light: #FFFFFF;
+            --text-muted: #8C8097;
+
+            --font-h: 'Plus Jakarta Sans', sans-serif;
+            --font-b: 'Work Sans', sans-serif;
+
+            --ts-title: clamp(2rem, 5.5vw, 4.5rem);
+            --ts-h2: clamp(1.15rem, 2.8vw, 2rem);
+            --ts-h3: clamp(0.95rem, 1.8vw, 1.3rem);
+            --ts-body: clamp(0.78rem, 1.3vw, 1rem);
+            --ts-small: clamp(0.62rem, 0.95vw, 0.82rem);
+            --ts-label: clamp(0.52rem, 0.8vw, 0.68rem);
+            --ts-big: clamp(3rem, 10vw, 8rem);
+
+            --pad: clamp(1.5rem, 5vw, 5rem);
+            --gap: clamp(0.8rem, 2vw, 2rem);
+            --r: clamp(16px, 2.5vw, 30px);
+            --r-pill: 100px;
+
+            --ease: cubic-bezier(0.16, 1, 0.3, 1);
+            --dur: 0.6s;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; scroll-snap-type: y mandatory; height: 100%; overflow-x: hidden; }
+        body { font-family: var(--font-b); background: var(--bg); color: var(--text); overflow-x: hidden; height: 100%; }
+
+        /* SLIDES */
+        .slide {
+            width: 100vw; height: 100vh; height: 100dvh;
+            padding: var(--pad);
+            scroll-snap-align: start;
+            display: flex; flex-direction: column; justify-content: center;
+            position: relative; overflow: hidden;
+            background: var(--bg);
+        }
+        .slide.white { background: var(--bg-white); }
+        .slide.dark { background: var(--bg-dark); color: var(--text-light); }
+
+        .slide-content { flex:1; display:flex; flex-direction:column; justify-content:center; max-height:100%; overflow:hidden; }
+
+        /* TYPO */
+        h1 { font-family:var(--font-h); font-size:var(--ts-title); font-weight:800; line-height:1.05; letter-spacing:-0.03em; color:var(--text); }
+        .slide.dark h1 { color:var(--text-light); }
+        h2 { font-family:var(--font-h); font-size:var(--ts-h2); font-weight:700; line-height:1.2; color:var(--text); }
+        .slide.dark h2 { color:var(--text-light); }
+        h3 { font-family:var(--font-h); font-size:var(--ts-h3); font-weight:700; line-height:1.25; color:var(--text); }
+        p,li { font-family:var(--font-b); font-size:var(--ts-body); line-height:1.55; color:var(--text-muted); }
+        .slide.dark p,.slide.dark li { color:rgba(255,255,255,0.7); }
+
+        .label { font-family:var(--font-h); font-size:var(--ts-label); font-weight:700; letter-spacing:0.12em; text-transform:uppercase; color:var(--purple-mid); opacity:0.6; }
+        .slide.dark .label { color:var(--pink); opacity:1; }
+
+        .big-num { font-family:var(--font-h); font-weight:800; font-size:var(--ts-big); line-height:1; letter-spacing:-0.04em; color:var(--purple); }
+        .slide.dark .big-num { color:var(--pink); }
+
+        /* CARDS */
+        .card { background:var(--bg-white); border-radius:var(--r); padding:clamp(0.8rem,2vw,1.8rem); box-shadow:0 4px 20px var(--shadow); }
+        .card.pink { background:var(--pink); }
+        .card.purple { background:var(--purple); color:var(--text-light); }
+        .card.purple h3,.card.purple p { color:var(--text-light); }
+        .card.purple p { opacity:0.8; }
+        .card.outline { background:transparent; border:2px solid rgba(60,14,107,0.1); box-shadow:none; }
+
+        /* BADGES */
+        .badge { display:inline-block; padding:clamp(0.15rem,0.3vw,0.25rem) clamp(0.5rem,0.8vw,0.7rem); border-radius:var(--r-pill); font-family:var(--font-h); font-size:var(--ts-label); font-weight:700; letter-spacing:0.04em; text-transform:uppercase; }
+        .badge.ok { background:var(--lavender-deep); color:var(--purple); }
+        .badge.tune { background:var(--pink); color:var(--purple); }
+        .badge.new { background:var(--purple); color:var(--text-light); }
+
+        /* LAYOUTS */
+        .split { display:grid; grid-template-columns:1fr 1fr; gap:clamp(1rem,2.5vw,2.5rem); align-items:center; }
+        .grid-3 { display:grid; grid-template-columns:repeat(3,1fr); gap:clamp(0.5rem,1.2vw,1rem); }
+        .grid-2 { display:grid; grid-template-columns:repeat(2,1fr); gap:clamp(0.5rem,1.2vw,1rem); }
+        .grid-4 { display:grid; grid-template-columns:repeat(4,1fr); gap:clamp(0.5rem,1.2vw,1rem); }
+        .stack { display:flex; flex-direction:column; gap:clamp(0.3rem,0.6vw,0.5rem); }
+        .stack-lg { display:flex; flex-direction:column; gap:var(--gap); }
+        .center { text-align:center; }
+
+        /* FLOW */
+        .flow { display:flex; align-items:center; gap:clamp(0.3rem,0.8vw,0.8rem); justify-content:center; flex-wrap:wrap; }
+        .flow-step { background:var(--bg-white); border-radius:var(--r); padding:clamp(0.6rem,1.2vw,1rem) clamp(0.8rem,1.5vw,1.4rem); box-shadow:0 2px 12px var(--shadow); text-align:center; min-width:clamp(90px,14vw,160px); }
+        .flow-step.accent { background:var(--pink); }
+        .flow-step strong { display:block; font-family:var(--font-h); font-size:var(--ts-body); font-weight:700; color:var(--text); }
+        .flow-step span { font-size:var(--ts-small); color:var(--text-muted); }
+        .flow-arrow { font-size:clamp(1rem,2vw,1.5rem); color:var(--purple); opacity:0.3; }
+
+        /* BULLETS */
+        .bullets { list-style:none; display:flex; flex-direction:column; gap:clamp(0.2rem,0.5vw,0.4rem); }
+        .bullets li { padding-left:clamp(0.7rem,1vw,0.9rem); position:relative; font-size:var(--ts-body); }
+        .bullets li::before { content:""; position:absolute; left:0; top:0.6em; width:clamp(4px,0.4vw,5px); height:clamp(4px,0.4vw,5px); border-radius:50%; background:var(--pink); }
+
+        /* TIMELINE */
+        .timeline-h { display:flex; gap:clamp(0.5rem,1vw,1rem); }
+        .phase { flex:1; border-radius:var(--r); padding:clamp(0.8rem,1.5vw,1.5rem); display:flex; flex-direction:column; gap:clamp(0.2rem,0.4vw,0.4rem); }
+        .phase.now { background:var(--purple); color:var(--text-light); box-shadow:0 8px 30px rgba(60,14,107,0.25); }
+        .phase.now h3,.phase.now p { color:var(--text-light); }
+        .phase.now p { opacity:0.8; }
+        .phase.next { background:var(--bg-white); box-shadow:0 2px 12px var(--shadow); }
+        .phase-label { font-family:var(--font-h); font-size:var(--ts-label); font-weight:700; text-transform:uppercase; letter-spacing:0.1em; opacity:0.5; }
+        .phase.now .phase-label { color:var(--pink); opacity:1; }
+
+        /* SPREADSHEET PREVIEW */
+        .sheet { background:var(--bg-white); border-radius:var(--r); box-shadow:0 4px 24px var(--shadow); overflow:hidden; border:1px solid rgba(60,14,107,0.06); }
+        .sheet-bar { background:var(--lavender-deep); padding:clamp(0.3rem,0.5vw,0.5rem) clamp(0.6rem,1vw,1rem); display:flex; align-items:center; gap:clamp(0.3rem,0.5vw,0.5rem); border-bottom:1px solid rgba(60,14,107,0.06); }
+        .sheet-dot { width:clamp(6px,0.5vw,8px); height:clamp(6px,0.5vw,8px); border-radius:50%; }
+        .sheet-dot.r { background:#FF6B6B; }
+        .sheet-dot.y { background:#FFD93D; }
+        .sheet-dot.g { background:#6BCB77; }
+        .sheet-title { font-family:var(--font-h); font-size:var(--ts-small); font-weight:600; color:var(--purple); margin-left:clamp(0.3rem,0.5vw,0.5rem); }
+
+        .sheet table { width:100%; border-collapse:collapse; font-size:var(--ts-small); }
+        .sheet th { background:var(--lavender); font-family:var(--font-h); font-weight:700; color:var(--purple); text-align:left; padding:clamp(0.3rem,0.5vw,0.5rem) clamp(0.4rem,0.6vw,0.6rem); border-bottom:2px solid rgba(60,14,107,0.1); font-size:var(--ts-label); text-transform:uppercase; letter-spacing:0.04em; white-space:nowrap; }
+        .sheet td { padding:clamp(0.25rem,0.4vw,0.4rem) clamp(0.4rem,0.6vw,0.6rem); border-bottom:1px solid rgba(60,14,107,0.04); color:var(--text); white-space:nowrap; }
+        .sheet tr:last-child td { border-bottom:none; }
+        .sheet .highlight { color:var(--purple); font-weight:700; }
+        .sheet .accent { color:var(--pink-hot); font-weight:600; }
+
+        /* NAV */
+        .progress-bar { position:fixed; top:0; left:0; height:3px; background:var(--purple); z-index:1000; transition:width 0.3s ease; width:0%; }
+        .nav-dots { position:fixed; right:clamp(0.5rem,1.5vw,1.5rem); top:50%; transform:translateY(-50%); display:flex; flex-direction:column; gap:clamp(4px,0.5vw,8px); z-index:100; }
+        .nav-dot { width:clamp(6px,0.6vw,8px); height:clamp(6px,0.6vw,8px); border-radius:50%; background:rgba(60,14,107,0.15); cursor:pointer; transition:all 0.3s ease; border:none; padding:0; }
+        .nav-dot.active { background:var(--purple); transform:scale(1.5); }
+        .keyboard-hint { position:fixed; bottom:clamp(0.5rem,1.5vw,1.5rem); left:50%; transform:translateX(-50%); font-size:var(--ts-label); color:rgba(60,14,107,0.2); z-index:100; }
+
+        /* ANIMATION */
+        .reveal { opacity:0; transform:translateY(20px); transition:opacity var(--dur) var(--ease), transform var(--dur) var(--ease); }
+        .slide.visible .reveal { opacity:1; transform:translateY(0); }
+        .reveal:nth-child(1){transition-delay:0.05s} .reveal:nth-child(2){transition-delay:0.15s} .reveal:nth-child(3){transition-delay:0.25s} .reveal:nth-child(4){transition-delay:0.35s}
+
+        /* RESPONSIVE */
+        @media(max-height:700px){:root{--pad:clamp(0.75rem,3vw,2rem);--gap:clamp(0.4rem,1.5vw,1rem);--ts-title:clamp(1.5rem,4.5vw,2.5rem);--ts-big:clamp(2.5rem,8vw,5rem);}}
+        @media(max-height:600px){:root{--pad:clamp(0.5rem,2.5vw,1.5rem);--ts-title:clamp(1.2rem,4vw,2rem);--ts-body:clamp(0.7rem,1.2vw,0.95rem);--ts-big:clamp(2rem,7vw,4rem);}.nav-dots,.keyboard-hint{display:none;}}
+        @media(max-height:500px){:root{--pad:clamp(0.4rem,2vw,1rem);--ts-title:clamp(1rem,3.5vw,1.5rem);--ts-big:clamp(1.5rem,6vw,3rem);}}
+        @media(max-width:768px){.split,.grid-4{grid-template-columns:1fr;gap:clamp(0.5rem,2vw,1rem);}.grid-3{grid-template-columns:1fr 1fr;}.timeline-h{flex-direction:column;}.flow{flex-direction:column;}.flow-arrow{transform:rotate(90deg);}}
+        @media(max-width:600px){.grid-3,.grid-2{grid-template-columns:1fr;}}
+        @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:0.01ms!important;transition-duration:0.2s!important;}html{scroll-behavior:auto;}}
+    </style>
+</head>
+<body>
+
+    <div class="progress-bar" id="progressBar"></div>
+    <nav class="nav-dots" id="navDots"></nav>
+    <div class="keyboard-hint">← → para navegar</div>
+
+    <!-- ═══════════════════════════════════════
+         1. TÍTULO
+         ═══════════════════════════════════════ -->
+    <section class="slide white" id="s1">
+        <div class="slide-content center" style="justify-content:center;align-items:center;">
+            <p class="label reveal">KICKOFF — 26 DE FEVEREIRO DE 2026</p>
+            <h1 class="reveal" style="margin-top:clamp(0.5rem,1vw,1rem);">Máquina de<br>Qualificação<br>de Leads</h1>
+            <div class="reveal" style="width:clamp(40px,6vw,60px);height:4px;background:var(--pink);border-radius:2px;margin:clamp(0.5rem,1vw,1rem) auto;"></div>
+            <p class="reveal" style="color:var(--purple);font-weight:600;font-size:var(--ts-h3);">mevo</p>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════
+         2. AGENDA
+         ═══════════════════════════════════════ -->
+    <section class="slide" id="s2">
+        <div class="slide-content stack-lg">
+            <div class="reveal">
+                <p class="label">AGENDA</p>
+                <h2>6 blocos em 60 minutos — vamos sair com tudo definido</h2>
+            </div>
+            <div class="grid-3 reveal">
+                <div class="card"><h3 style="color:var(--purple);">01</h3><p>Contexto e visão</p></div>
+                <div class="card"><h3 style="color:var(--purple);">02</h3><p>Como os dados ficam</p></div>
+                <div class="card"><h3 style="color:var(--purple);">03</h3><p>Workshop hospitais</p></div>
+                <div class="card"><h3 style="color:var(--purple);">04</h3><p>Workshop clínicas</p></div>
+                <div class="card"><h3 style="color:var(--purple);">05</h3><p>Como receber os dados</p></div>
+                <div class="card pink"><h3 style="color:var(--purple);">06</h3><p style="color:var(--text);">Próximos passos com donos e prazos</p></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════
+         3. A DOR — número grande
+         "30 min por conta × 10 = 5h/dia pesquisando"
+         ═══════════════════════════════════════ -->
+    <section class="slide white" id="s3">
+        <div class="slide-content center" style="justify-content:center;align-items:center;">
+            <p class="label reveal">O CENÁRIO ATUAL</p>
+            <div class="big-num reveal">5h/dia</div>
+            <h2 class="reveal" style="max-width:500px;margin:0 auto;">gastas pesquisando<br>em vez de vendendo</h2>
+            <p class="reveal" style="max-width:450px;margin:clamp(0.3rem,0.5vw,0.5rem) auto 0;">~30 minutos por conta: CRM, CNPJ, LinkedIn, ligar pro hospital, descobrir o sistema, criar o lead</p>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════
+         4. A VISÃO — 4 benefícios
+         Tempo + Funil + Abrangência + Rapport
+         ═══════════════════════════════════════ -->
+    <section class="slide dark" id="s4">
+        <div class="slide-content stack-lg" style="align-items:center;">
+            <p class="label reveal">COM DADOS ENRIQUECIDOS</p>
+            <h2 class="reveal" style="text-align:center;max-width:600px;">Não é só economizar tempo — é vender melhor</h2>
+            <div class="grid-4 reveal" style="max-width:900px;width:100%;">
+                <div style="text-align:center;">
+                    <div style="font-family:var(--font-h);font-weight:800;font-size:clamp(1.5rem,3.5vw,2.5rem);color:var(--pink);">+4h/dia</div>
+                    <p style="font-size:var(--ts-small);">devolvidas pro<br>time comercial</p>
+                </div>
+                <div style="text-align:center;">
+                    <div style="font-family:var(--font-h);font-weight:800;font-size:clamp(1.5rem,3.5vw,2.5rem);color:var(--pink);">Funil</div>
+                    <p style="font-size:var(--ts-small);">contatos direcionados<br>pras contas certas</p>
+                </div>
+                <div style="text-align:center;">
+                    <div style="font-family:var(--font-h);font-weight:800;font-size:clamp(1.5rem,3.5vw,2.5rem);color:var(--pink);">Dados</div>
+                    <p style="font-size:var(--ts-small);">cascateamento de fontes,<br>mais emails corretos</p>
+                </div>
+                <div style="text-align:center;">
+                    <div style="font-family:var(--font-h);font-weight:800;font-size:clamp(1.5rem,3.5vw,2.5rem);color:var(--pink);">Rapport</div>
+                    <p style="font-size:var(--ts-small);">ligação personalizada,<br>não fria</p>
+                </div>
+            </div>
+            <p class="reveal" style="text-align:center;font-size:var(--ts-small);max-width:500px;">Menos recursos pro mesmo resultado. Mais conversão ao longo de todo o funil.</p>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════
+         5. COMO OS DADOS FICAM — Spreadsheet
+         Dados reais do AlvaoLeads_enriquecido
+         ═══════════════════════════════════════ -->
+    <section class="slide" id="s5">
+        <div class="slide-content stack-lg">
+            <div class="reveal">
+                <p class="label">COMO VOCÊS RECEBEM</p>
+                <h2>Cada conta chega assim — pesquisa de 30 min em 1 clique</h2>
+            </div>
+            <div class="sheet reveal">
+                <div class="sheet-bar">
+                    <span class="sheet-dot r"></span><span class="sheet-dot y"></span><span class="sheet-dot g"></span>
+                    <span class="sheet-title">Contas Enriquecidas — Mevo</span>
+                </div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Conta</th>
+                            <th>Cidade</th>
+                            <th>Sistema</th>
+                            <th>Médicos</th>
+                            <th>Consultas/mês</th>
+                            <th>Rating</th>
+                            <th>Classificação</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Clínica Viva Simon</strong></td>
+                            <td>Florianópolis, SC</td>
+                            <td class="highlight">TDSA</td>
+                            <td>57</td>
+                            <td class="accent">6.987</td>
+                            <td>4.6 (5.082)</td>
+                            <td class="highlight">Potencial</td>
+                        </tr>
+                        <tr>
+                            <td><strong>CM São José Boituva</strong></td>
+                            <td>Boituva, SP</td>
+                            <td class="highlight">Pixeon</td>
+                            <td>38</td>
+                            <td class="accent">10.209</td>
+                            <td>4.7 (7.425)</td>
+                            <td class="highlight">Potencial</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Hospital Santa Catarina</strong></td>
+                            <td>São Paulo, SP</td>
+                            <td class="highlight">TASY</td>
+                            <td>187</td>
+                            <td class="accent">12.400</td>
+                            <td>4.3 (3.201)</td>
+                            <td class="highlight">Potencial</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <p class="reveal center" style="color:var(--purple);font-weight:600;">Pode ser Google Docs ou direto no Salesforce — vocês escolhem</p>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════
+         6. VITOR + HUGO
+         "Expandindo em cima do trabalho do Vitor"
+         ═══════════════════════════════════════ -->
+    <section class="slide white" id="s6">
+        <div class="slide-content stack-lg" style="align-items:center;text-align:center;">
+            <div class="reveal">
+                <p class="label">COMO VAMOS CONSTRUIR</p>
+                <h2 style="max-width:600px;margin:0 auto;">Eu e o Vitor juntos — expandindo em cima da base que ele já construiu</h2>
+            </div>
+            <div class="split reveal" style="max-width:700px;width:100%;">
+                <div class="card" style="text-align:left;">
+                    <h3 style="color:var(--purple);">Vitor já tem</h3>
+                    <ul class="bullets">
+                        <li>Base CNES completa via FTP</li>
+                        <li>Médicos, especialidades, leitos</li>
+                        <li>Segmentação por região e porte</li>
+                    </ul>
+                </div>
+                <div class="card pink" style="text-align:left;">
+                    <h3>Hugo agrega</h3>
+                    <ul class="bullets">
+                        <li style="color:var(--text);">Sistema de prescrição automatizado</li>
+                        <li style="color:var(--text);">Decisores com contato (LinkedIn, email)</li>
+                        <li style="color:var(--text);">Sinais digitais, vagas, maturidade</li>
+                    </ul>
+                </div>
+            </div>
+            <p class="reveal" style="color:var(--text-muted);max-width:500px;font-size:var(--ts-body);">Reuniões separadas eu e Vitor pra construir a quatro mãos. O ótimo trabalho que ele fez é a fundação de tudo.</p>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════
+         7. ROADMAP — 3 fases, 3 meses
+         ═══════════════════════════════════════ -->
+    <section class="slide" id="s7">
+        <div class="slide-content stack-lg">
+            <div class="reveal">
+                <p class="label">COMO VAMOS TRABALHAR</p>
+                <h2>Começamos hoje — 3 fases claras até junho</h2>
+            </div>
+            <div class="timeline-h reveal">
+                <div class="phase now">
+                    <span class="phase-label">Fase 1 — Construção</span>
+                    <h3 style="color:var(--text-light);">Hoje → 12/mar</h3>
+                    <p>2 semanas. Vocês mandam contas, eu entrego a V1 pronta</p>
+                </div>
+                <div class="phase next">
+                    <span class="phase-label">Fase 2 — Teste</span>
+                    <h3>Mar → Abr</h3>
+                    <p>1 mês. Vocês usam no dia a dia, feedback semanal, eu ajusto</p>
+                </div>
+                <div class="phase next">
+                    <span class="phase-label">Fase 3 — Expansão</span>
+                    <h3>Abr → Jun</h3>
+                    <p>2 meses. Expandimos a base, passo conhecimento pro Vitor</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════
+         8. DECISÕES
+         ═══════════════════════════════════════ -->
+    <section class="slide white" id="s8">
+        <div class="slide-content stack-lg">
+            <div class="reveal">
+                <p class="label">PRECISAMOS DEFINIR AGORA</p>
+                <h2>3 decisões antes de entrar nos detalhes</h2>
+            </div>
+            <div class="grid-3 reveal">
+                <div class="card">
+                    <span class="badge tune">1</span>
+                    <h3 style="margin-top:0.4em;">Escopo</h3>
+                    <p>Hospital e clínica juntos, ou foco num primeiro?</p>
+                </div>
+                <div class="card">
+                    <span class="badge tune">2</span>
+                    <h3 style="margin-top:0.4em;">Contas-amostra</h3>
+                    <p>Mandem contas que já conhecem — eu rodo e vocês validam</p>
+                </div>
+                <div class="card">
+                    <span class="badge tune">3</span>
+                    <h3 style="margin-top:0.4em;">Cadência</h3>
+                    <p>Reunião semanal de 1 hora — que dia funciona?</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════
+         9. STATUS DAS VARIÁVEIS
+         ═══════════════════════════════════════ -->
+    <section class="slide" id="s9">
+        <div class="slide-content stack-lg">
+            <div class="reveal">
+                <p class="label">ONDE ESTAMOS</p>
+                <h2>Boa parte já está pronta — falta calibrar com vocês</h2>
+            </div>
+            <div class="grid-3 reveal">
+                <div class="card"><span class="badge ok">Pronto</span><h3 style="margin-top:0.4em;">Operadoras</h3><p>Todas as operadoras por instituição</p></div>
+                <div class="card"><span class="badge ok">Pronto</span><h3 style="margin-top:0.4em;">Rede / Grupo</h3><p>Matriz e filiais identificadas</p></div>
+                <div class="card"><span class="badge ok">Pronto</span><h3 style="margin-top:0.4em;">Maturidade digital</h3><p>Presença online e tecnologias</p></div>
+            </div>
+            <div class="grid-3 reveal">
+                <div class="card"><span class="badge tune">Calibrar</span><h3 style="margin-top:0.4em;">Sistema de prescrição</h3><p>Evoluir com feedback de vocês</p></div>
+                <div class="card"><span class="badge tune">Calibrar</span><h3 style="margin-top:0.4em;">Volume de consultas</h3><p>Aperfeiçoar junto com o Vitor</p></div>
+                <div class="card"><span class="badge tune">Calibrar</span><h3 style="margin-top:0.4em;">Vagas + Decisores</h3><p>Definir quais cargos priorizar</p></div>
+            </div>
+            <div class="grid-2 reveal" style="max-width:66%;margin:0;">
+                <div class="card"><span class="badge new">Novo</span><h3 style="margin-top:0.4em;">Associações / Fundações</h3><p>Quem administra cada instituição</p></div>
+                <div class="card"><span class="badge new">Novo</span><h3 style="margin-top:0.4em;">Sinais de modernização</h3><p>"Paperless", vagas de TI, renovações</p></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════
+         10. WORKSHOP HOSPITAIS
+         Insights + cargos + como rankear
+         ═══════════════════════════════════════ -->
+    <section class="slide white" id="s10">
+        <div class="slide-content stack-lg">
+            <div class="reveal">
+                <p class="label">WORKSHOP — HOSPITAIS</p>
+                <h2>O que vocês já trouxeram, cargos e como ordenar</h2>
+            </div>
+            <div class="grid-3 reveal">
+                <div class="card">
+                    <h3 style="margin-bottom:0.3em;">O que ouvimos</h3>
+                    <ul class="bullets">
+                        <li><strong>Pedrinho:</strong> 30 min/conta, ouvidoria não fala o sistema</li>
+                        <li><strong>Thalita:</strong> "paperless" = oportunidade</li>
+                        <li><strong>Thalita:</strong> associações importam (FAMESP...)</li>
+                    </ul>
+                </div>
+                <div class="card pink">
+                    <h3 style="margin-bottom:0.3em;">Cargos-alvo</h3>
+                    <ul class="bullets">
+                        <li style="color:var(--text);"><strong>Decisor:</strong> Dir. TI, CEO, Superint.</li>
+                        <li style="color:var(--text);"><strong>Influenciador:</strong> Ger. TI, Dir. Clínico</li>
+                        <li style="color:var(--text);"><strong>Contato inicial:</strong> Coord. TI</li>
+                    </ul>
+                    <p style="font-size:var(--ts-label);color:var(--purple);font-weight:600;margin-top:0.3em;">Faz sentido? Falta alguém?</p>
+                </div>
+                <div class="card outline">
+                    <h3 style="margin-bottom:0.3em;">Como rankear</h3>
+                    <ul class="bullets">
+                        <li><strong>Filtro:</strong> sistema compatível?</li>
+                        <li><strong>1º:</strong> volume de consultas</li>
+                        <li><strong>2º:</strong> perfil (misto, exames, porte)</li>
+                        <li><strong>3º:</strong> sinais de momento</li>
+                    </ul>
+                </div>
+            </div>
+            <p class="reveal center" style="color:var(--purple);font-weight:600;">Fora esses, tem mais algum dado que muda a priorização?</p>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════
+         11. WORKSHOP CLÍNICAS
+         Strategy + cargos + como rankear
+         ═══════════════════════════════════════ -->
+    <section class="slide" id="s11">
+        <div class="slide-content stack-lg">
+            <div class="reveal">
+                <p class="label">WORKSHOP — CLÍNICAS</p>
+                <h2>Clínica é mais difícil — por isso o feedback de vocês é fundamental</h2>
+            </div>
+            <div class="grid-3 reveal">
+                <div class="card" style="border-left:4px solid var(--purple);">
+                    <h3 style="margin-bottom:0.3em;">Estratégia V1</h3>
+                    <ul class="bullets">
+                        <li><strong>SUS/Mistas:</strong> dados abertos, estimativa confiável</li>
+                        <li><strong>Privadas:</strong> sinais indiretos, melhora com feedback</li>
+                        <li style="color:var(--purple);font-weight:600;">Sugestão: SUS primeiro na V1</li>
+                    </ul>
+                </div>
+                <div class="card pink">
+                    <h3 style="margin-bottom:0.3em;">Quem decide</h3>
+                    <ul class="bullets">
+                        <li style="color:var(--text);"><strong>Pequena:</strong> sócio/proprietário</li>
+                        <li style="color:var(--text);"><strong>Média/grande:</strong> Dir. Médico, Dir. Adm.</li>
+                        <li style="color:var(--text);"><strong>Rede:</strong> CEO, VP, Dir. Operações</li>
+                    </ul>
+                    <p style="font-size:var(--ts-label);color:var(--purple);font-weight:600;margin-top:0.3em;">Quem é a pessoa que decide?</p>
+                </div>
+                <div class="card outline">
+                    <h3 style="margin-bottom:0.3em;">Como rankear</h3>
+                    <ul class="bullets">
+                        <li><strong>Filtro:</strong> SUS/mista vs privada</li>
+                        <li><strong>1º:</strong> volume estimado</li>
+                        <li><strong>2º:</strong> sinais digitais</li>
+                        <li><strong>3º:</strong> rede (mais unidades = mais impacto)</li>
+                    </ul>
+                </div>
+            </div>
+            <p class="reveal center" style="color:var(--purple);font-weight:600;">O que mais dói na qualificação de clínica hoje?</p>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════
+         12. FLUXO + ONDE RECEBER
+         ═══════════════════════════════════════ -->
+    <section class="slide white" id="s12">
+        <div class="slide-content stack-lg">
+            <div class="reveal">
+                <p class="label">DA QUALIFICAÇÃO À VENDA</p>
+                <h2>Como os dados chegam até vocês</h2>
+            </div>
+            <div class="flow reveal">
+                <div class="flow-step accent">
+                    <strong>Enriquecimento</strong>
+                    <span>Dados consolidados<br>e ranqueados</span>
+                </div>
+                <span class="flow-arrow">→</span>
+                <div class="flow-step">
+                    <strong>Pré-qualificação</strong>
+                    <span>Primeira ligação<br>valida informações</span>
+                </div>
+                <span class="flow-arrow">→</span>
+                <div class="flow-step">
+                    <strong>Vendedor</strong>
+                    <span>Conta qualificada<br>com dossiê completo</span>
+                </div>
+            </div>
+            <div class="reveal center" style="margin-top:clamp(0.3rem,0.5vw,0.5rem);">
+                <h3>Onde vocês querem receber?</h3>
+                <div class="grid-2" style="max-width:500px;margin:clamp(0.3rem,0.5vw,0.5rem) auto 0;">
+                    <div class="card" style="text-align:center;">
+                        <h3>Google Docs</h3>
+                        <p>Clica e abre — rápido na V1</p>
+                    </div>
+                    <div class="card" style="text-align:center;">
+                        <h3>Salesforce</h3>
+                        <p>Direto no fluxo de vocês</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════
+         13. PRÓXIMOS PASSOS
+         Quem, o quê, até quando
+         ═══════════════════════════════════════ -->
+    <section class="slide" id="s13">
+        <div class="slide-content stack-lg">
+            <div class="reveal">
+                <p class="label">SAINDO DAQUI COM TUDO CLARO</p>
+                <h2>Quem faz o quê, até quando</h2>
+            </div>
+            <div class="split reveal">
+                <div class="card purple">
+                    <h3>Vocês — até sexta 28/fev</h3>
+                    <ul class="bullets" style="margin-top:0.3em;">
+                        <li style="color:rgba(255,255,255,0.85);">Pedrinho + Thalita: 10-15 hospitais conhecidos</li>
+                        <li style="color:rgba(255,255,255,0.85);">Joice + Kamylla + Raillany: 10-15 clínicas</li>
+                        <li style="color:rgba(255,255,255,0.85);">Compartilhar links e bases que já têm pra integrar</li>
+                    </ul>
+                </div>
+                <div class="card pink">
+                    <h3>Hugo + Vitor — em paralelo</h3>
+                    <ul class="bullets" style="margin-top:0.3em;">
+                        <li style="color:var(--text);">Rodo enriquecimento nas contas-amostra</li>
+                        <li style="color:var(--text);">Construo V1 em cima da base do Vitor</li>
+                        <li style="color:var(--text);">Calibro volume e sistema com ele</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="reveal center">
+                <div class="card" style="display:inline-block;max-width:550px;">
+                    <p style="color:var(--purple);font-weight:600;">Semana do dia 9 de março: reunião pra alinhar os primeiros resultados e vocês validarem a V1.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════
+         14. FECHAMENTO
+         ═══════════════════════════════════════ -->
+    <section class="slide dark" id="s14">
+        <div class="slide-content center" style="justify-content:center;align-items:center;">
+            <h1 class="reveal" style="font-size:clamp(1.5rem,4vw,3.2rem);max-width:650px;">
+                Construir juntos.<br>Testar no dia a dia.<br><span style="color:var(--pink);">Vocês ficam com a inteligência.</span>
+            </h1>
+            <div class="reveal" style="display:flex;gap:clamp(1rem,3vw,2.5rem);margin-top:clamp(1rem,2vw,2rem);">
+                <div style="text-align:center;">
+                    <div style="font-family:var(--font-h);font-weight:800;font-size:clamp(1.3rem,3vw,2.2rem);color:var(--pink);">28/fev</div>
+                    <p style="font-size:var(--ts-small);">Contas-amostra</p>
+                </div>
+                <div style="text-align:center;">
+                    <div style="font-family:var(--font-h);font-weight:800;font-size:clamp(1.3rem,3vw,2.2rem);color:var(--pink);">9/mar</div>
+                    <p style="font-size:var(--ts-small);">Primeiros resultados</p>
+                </div>
+                <div style="text-align:center;">
+                    <div style="font-family:var(--font-h);font-weight:800;font-size:clamp(1.3rem,3vw,2.2rem);color:var(--pink);">Abril</div>
+                    <p style="font-size:var(--ts-small);">Resultados pro time</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        class S{constructor(){this.s=document.querySelectorAll('.slide');this.c=0;this.l=false;this.initDots();this.initObs();this.initKey();this.initWheel();this.initTouch();this.upProg();this.s[0].classList.add('visible');}
+        initDots(){const n=document.getElementById('navDots');this.s.forEach((_,i)=>{const d=document.createElement('button');d.className='nav-dot'+(i===0?' active':'');d.setAttribute('aria-label',`Slide ${i+1}`);d.addEventListener('click',()=>this.go(i));n.appendChild(d);});this.d=n.querySelectorAll('.nav-dot');}
+        initObs(){const o=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting){x.target.classList.add('visible');this.c=Array.from(this.s).indexOf(x.target);this.upDots();this.upProg();}});},{threshold:0.5});this.s.forEach(s=>o.observe(s));}
+        initKey(){document.addEventListener('keydown',e=>{if(['ArrowRight','ArrowDown',' '].includes(e.key)){e.preventDefault();this.next();}else if(['ArrowLeft','ArrowUp'].includes(e.key)){e.preventDefault();this.prev();}});}
+        initWheel(){document.addEventListener('wheel',e=>{if(this.l)return;this.l=true;e.deltaY>0?this.next():this.prev();setTimeout(()=>{this.l=false;},800);},{passive:true});}
+        initTouch(){let y=0;document.addEventListener('touchstart',e=>{y=e.touches[0].clientY;},{passive:true});document.addEventListener('touchend',e=>{const d=y-e.changedTouches[0].clientY;if(Math.abs(d)>50){d>0?this.next():this.prev();}},{passive:true});}
+        go(i){if(i>=0&&i<this.s.length){this.s[i].scrollIntoView({behavior:'smooth'});this.c=i;this.upDots();this.upProg();}}
+        next(){if(this.c<this.s.length-1)this.go(this.c+1);}
+        prev(){if(this.c>0)this.go(this.c-1);}
+        upDots(){this.d.forEach((d,i)=>d.classList.toggle('active',i===this.c));}
+        upProg(){document.getElementById('progressBar').style.width=((this.c+1)/this.s.length*100)+'%';}}
+        document.addEventListener('DOMContentLoaded',()=>new S());
+    </script>
+</body>
+</html>
